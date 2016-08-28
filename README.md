@@ -1,4 +1,4 @@
 # smooth-coffeescript-tutorial
 
-Do exercises in interactive smooth coffeescript
-https://github.com/railsstudent/smooth-coffeescript-tutorial/new/master?readme=1
+####Do exercises in interactive smooth coffeescript
+####Interactive Smooth CoffeeScript[https://github.com/railsstudent/smooth-coffeescript-tutorial/new/master?readme=1]
