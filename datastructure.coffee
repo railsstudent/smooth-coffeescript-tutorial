@@ -66,10 +66,15 @@ console.log(a.join(' '))
 console.log(a.join(' ').split(' '))
 
 # Exercise 13
-startWith = (fullString, startPrefix) ->
+startsWith = (fullString, startPrefix) ->
   fullString[0...startPrefix.length] is startPrefix
 
-console.log(startWith('Mississippi River', 'Miss') is true)
-console.log(startWith('Mississippi River', 'Misst') is false)
-console.log(startWith('Mississippi River', 'wil') is false)
-console.log(startWith('rotation', 'rot') is true)
+console.log(startsWith('Mississippi River', 'Miss') is true)
+console.log(startsWith('Mississippi River', 'Misst') is false)
+console.log(startsWith('Mississippi River', 'wil') is false)
+console.log(startsWith('rotation', 'rot') is true)
+
+console.log 'Pip'.charAt 250
+console.log 'Nop'.slice 1, 10
+console.log 'Pin'[1...10]
+console.log startsWith('Idiots', 'Most honoured colleagues')
