@@ -64,3 +64,12 @@ console.log(mack)
 a = ['A B', 'C', 'D']
 console.log(a.join(' '))
 console.log(a.join(' ').split(' '))
+
+# Exercise 13
+startWith = (fullString, startPrefix) ->
+  fullString[0...startPrefix.length] is startPrefix
+
+console.log(startWith('Mississippi River', 'Miss') is true)
+console.log(startWith('Mississippi River', 'Misst') is false)
+console.log(startWith('Mississippi River', 'wil') is false)
+console.log(startWith('rotation', 'rot') is true)
