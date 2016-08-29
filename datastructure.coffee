@@ -78,3 +78,12 @@ console.log 'Pip'.charAt 250
 console.log 'Nop'.slice 1, 10
 console.log 'Pin'[1...10]
 console.log startsWith('Idiots', 'Most honoured colleagues')
+
+catNames = (paragraph) ->
+  index = paragraph.indexOf(':')
+  strNames = paragraph[index + 2...]
+  arrNames = strNames.split(',')
+  return arrNames
+
+console.log(catNames('dead: bobby,mary,bill'))
+console.log(catNames('born: bobby,mary,bill'))
