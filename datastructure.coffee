@@ -163,11 +163,11 @@ console.log('List living cats:')
 for name of livingCats
   console.log name
 
-extractDate = (paragraphs) ->
+extractDate = (paragraph) ->
   # extract string before the first colon
   # split string by space
   # get the second string and convert it to date object
-  strDate = paragraphs.split(':')[0].split(' ')[1]
+  strDate = paragraph.split(':')[0].split(' ')[1]
   arrDate = strDate.split('/')
   dateOfEvent = new Date (Number arrDate[2]), (Number arrDate[1]) - 1,
                     (Number arrDate[0])
@@ -175,3 +175,55 @@ extractDate = (paragraphs) ->
 
 console.log('died 27/04/2006: Black Leclère')
 console.log(extractDate('died 27/04/2006: Black Leclère'))
+console.log(extractDate('born 15/11/2003 (mother Spot): White Fang'))
+
+between = (paragraph, startPattern, endPattern) ->
+  idx1 = paragraph.indexOf startPattern
+  idx1 += startPattern.length
+  idx2 = paragraph.indexOf endPattern, idx1
+  paragraph[idx1...idx2]
+
+console.log(between 'born 15/11/2003 (mother Spot): White Fang',
+        '(mother ', ')')
+console.log(between 'bu ] boo [ bah ] gzz', '[ ', ' ]')
+
+extractMother = (paragraph) ->
+  between paragraph, '(mother ', ')'
+
+catRecord = (name, birthdate, mother) ->
+  name:   name
+  birth:  birthdate
+  mother: mother
+
+addCats = (set, names, birthdate, mother) ->
+  for name in names
+    set[name] = catRecord name, birthdate, mother
+
+deadCats = (set, names, deathdate) ->
+  for name in names
+    set[name].death = deathdate
+
+findCats = ->
+  mailArchive = retrieveMails()
+  cats = {'Spot': catRecord 'Spot',
+    new Date(1997, 2, 5), 'unknown'}
+
+  handleParagraph = (paragraph) ->
+    if startsWith paragraph, 'born'
+      addCats cats, catNames(paragraph),
+              extractDate(paragraph),
+              extractMother(paragraph)
+    else if startsWith paragraph, 'died'
+      deadCats cats, catNames(paragraph),
+               extractDate(paragraph)
+
+  for email in mailArchive
+    paragraphs = email.split '\n'
+    for paragraph in paragraphs
+      handleParagraph paragraph
+  cats
+
+catData = findCats()
+
+console.log(catData['Clementine'])
+console.log(catData[catData['Clementine'].mother])
