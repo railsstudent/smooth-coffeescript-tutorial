@@ -35,13 +35,15 @@ console.log('content' of chineseBox)
 console.log('content' of chineseBox.content)
 console.log(chineseBox)
 
-range = (num) ->
-  if num <= 0 then []
-  else
-    arr = []
-    for current in [0..num]
-      arr[current] = current
-    arr
+range = (start, end) ->
+  if arguments.length < 2
+    end = start
+    start = 0
+
+  arr = []
+  for current in [start..end]
+    arr.push current
+  arr
 
 console.log(range 0)
 console.log(range 10)
@@ -227,3 +229,43 @@ catData = findCats()
 
 console.log(catData['Clementine'])
 console.log(catData[catData['Clementine'].mother])
+
+# Exercise 17
+formatDate = (date) ->
+  pad = (number) ->
+    if number < 10 then '0' + number else number
+  "#{pad date.getDate()}/" +
+  "#{pad date.getMonth() + 1}/" +
+  "#{date.getFullYear()}"
+
+catInfo = (data, name) ->
+  unless name of data
+    return "No cat by the name of #{name} is known."
+  cat = data[name]
+  message = "#{name}," +
+            " born #{formatDate cat.birth}" +
+            " from mother #{cat.mother}"
+  if "death" of cat
+    message += ", died #{formatDate cat.death}"
+  "#{message}."
+
+console.log (catInfo catData, "Fat Igor")
+console.log (formatDate new Date 2000, 0, 1)
+
+# Exercise 18
+oldestCat = (data) ->
+  oldest = null
+  for name of data
+    cat = data[name]
+    unless 'death' of cat
+      if oldest is null or oldest.birth > cat.birth
+        oldest = cat
+  oldest?.name
+console.log (oldestCat catData)
+
+# Exercise 19
+console.log(range 4, 9)
+console.log(range 12, 12)
+console.log(range 4)
+
+# Exercise 20
