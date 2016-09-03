@@ -162,3 +162,16 @@ console.log(livingCats, on)
 console.log('List living cats:')
 for name of livingCats
   console.log name
+
+extractDate = (paragraphs) ->
+  # extract string before the first colon
+  # split string by space
+  # get the second string and convert it to date object
+  strDate = paragraphs.split(':')[0].split(' ')[1]
+  arrDate = strDate.split('/')
+  dateOfEvent = new Date (Number arrDate[2]), (Number arrDate[1]) - 1,
+                    (Number arrDate[0])
+  return dateOfEvent
+
+console.log('died 27/04/2006: Black Leclère')
+console.log(extractDate('died 27/04/2006: Black Leclère'))
