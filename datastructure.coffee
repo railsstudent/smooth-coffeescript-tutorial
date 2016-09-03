@@ -269,3 +269,11 @@ console.log(range 12, 12)
 console.log(range 4)
 
 # Exercise 20
+sum = (numbers) ->
+  accum = 0
+  for val in numbers
+    accum = accum + val
+  accum
+
+console.log (sum [1..10])
+console.log (sum (range 1, 10))
