@@ -325,20 +325,20 @@ paragraphs = recluseFile.split '\n\n'
 console.log "Found #{paragraphs.length} paragraphs"
 
 #Exercise 22
-processParagraph = (paragraph) ->
+processParagraphOld = (paragraph) ->
   # count number of % in the paragraph
   numPercent = count paragraph.split(''), (c) -> c is '%'
   type = if numPercent is 0 then 'p' else 'h' + numPercent
   content = paragraph.substring(numPercent)
   { "type" : type, "content" : content}
 
-console.log count '%% sssss %%'.split(''), (c) -> c is '%'
+#console.log count '%% sssss %%'.split(''), (c) -> c is '%'
 
 paragraphs = map recluseFile.split('\n\n'),
-                 processParagraph
-console.log(paragraph for paragraph in paragraphs)
+                 processParagraphOld
+console.log(paragraph for paragraph in paragraphs[0...3])
 
-
+#Exercise 23
 splitParagraph = (text) ->
   # Find character position or end of text
   indexOrEnd = (character) ->
@@ -379,3 +379,43 @@ splitParagraph = (text) ->
         type: 'normal',
         content: takeNormal()
   fragments
+
+#Exercise 22
+processParagraph = (paragraph) ->
+  header = 0
+  while paragraph[0] is '%'
+    paragraph = paragraph.slice 1
+    header++
+  type: if header is 0 then 'p' else 'h' + header,
+  content: splitParagraph paragraph
+
+# Adhoc test
+paragraphs = map recluseFile.split('\n\n'),
+                 processParagraph
+console.log(paragraph for paragraph in paragraphs[0...3])
+
+extractFootnotes = (paragraphs) ->
+  footnotes = []
+  currentNote = 0
+  replaceFootnote = (fragment) ->
+    if fragment.type is 'footnote'
+      ++currentNote
+      footnotes.push fragment
+      fragment.number = currentNote
+      type: 'reference', number: currentNote
+    else
+      fragment
+
+  forEach paragraphs, (paragraph) ->
+    paragraph.content = map paragraph.content,
+                            replaceFootnote
+  footnotes
+
+console.log 'Footnotes from the recluse:'
+console.log extractFootnotes paragraphs
+console.log paragraphs[20]
+
+tag = (name, content, attributes) ->
+  name: name
+  attributes: attributes
+  content: content
