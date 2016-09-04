@@ -158,3 +158,26 @@ add = (a , b) -> a + b
 sum2 = (numbers) -> reduce numbers, add, 0
 console.log 'sum2: ', sum2 [1, 10, 100]
 console.log 'sum2: ', sum2 [1...10]
+
+#Exercise 21
+countZeroes = (numbers) ->
+  checkZero = (total, num) -> if num is 0 then total + 1 else total
+  reduce numbers, checkZero, 0
+
+count = (numbers, testFunc) ->
+  reduce numbers,
+    (total, number) -> if testFunc number then total + 1 else total,
+    0
+
+countZeroes2 = (numbers) -> count numbers, (number) -> number is 0
+
+console.log countZeroes [1, 3, 0, 2, 0]
+console.log countZeroes [1, 3, 4, 2, 5, 6]
+
+console.log count [1, 3, 0, 2, 0, 2, 2], (x) -> x is 0
+
+
+console.log countZeroes2 [1, 3, 0, 2, 0]
+console.log countZeroes2 [1, 3, 4, 2, 5, 6]
+bits = [1, 0, 1, 0, 0, 1, 1, 1, 0]
+console.log countZeroes2 bits
