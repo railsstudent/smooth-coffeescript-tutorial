@@ -136,3 +136,25 @@ findCats = ->
 catData = findCats()
 console.log(catData['Clementine'])
 console.log(catData[catData['Clementine'].mother])
+
+console.log Math.min.apply null, [5, 6]
+
+negate = (func) ->
+  (args...) -> not func args...
+
+morethan = (x, y) -> x > y
+lessthan = negate morethan
+
+console.log (lessthan 5, 7)
+console.log (lessthan 7, 7)
+console.log (lessthan 9, 7)
+
+reduce = (array, combine, base) ->
+  forEach array, (element) ->
+    base = combine base, element
+  base
+
+add = (a , b) -> a + b
+sum2 = (numbers) -> reduce numbers, add, 0
+console.log 'sum2: ', sum2 [1, 10, 100]
+console.log 'sum2: ', sum2 [1...10]
