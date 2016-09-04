@@ -452,3 +452,14 @@ image = (location) ->
   tag "img", [], src : location
 
 console.log image 'http://wwww.abc.com/xyz.png'
+
+escapeHTML = (text) ->
+  replacements = [[/&/g, '&amp;']
+                  [/"/g, '&quot;']
+                  [/</g, '&lt;']
+                  [/>/g, '&gt;']]
+  forEach replacements, (replace) ->
+    text = text?.replace replace[0], replace[1]
+  text
+
+console.log escapeHTML '< " & " >'
