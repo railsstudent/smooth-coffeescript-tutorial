@@ -493,3 +493,14 @@ renderHTML = (element) ->
 
   render element
   pieces.join ''
+
+imageSource = 'http://autotelicum.github.com/Smooth-CoffeeScript'
+linkOstrich = "#{imageSource}/img/ostrich.jpg"
+
+console.log renderHTML link 'http://www.nedroid.com', 'Drawings!'
+body = [tag('h1', ['The Test']),
+        tag('p', ['Here is a paragraph ' +
+                  'and an image...']),
+        image(linkOstrich)]
+doc = htmlDoc 'The Test', body
+console.log renderHTML doc
