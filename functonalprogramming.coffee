@@ -181,3 +181,11 @@ console.log countZeroes2 [1, 3, 0, 2, 0]
 console.log countZeroes2 [1, 3, 4, 2, 5, 6]
 bits = [1, 0, 1, 0, 0, 1, 1, 1, 0]
 console.log countZeroes2 bits
+
+map = (array, func) ->
+  result = []
+  forEach array, (element) ->
+    result.push func element
+  result
+
+console.log map [0.01, 2, 9.89, Math.PI], Math.round
