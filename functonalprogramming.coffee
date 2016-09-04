@@ -463,3 +463,33 @@ escapeHTML = (text) ->
   text
 
 console.log escapeHTML '< " & " >'
+
+renderHTML = (element) ->
+  pieces = []
+
+  renderAttributes = (attributes) ->
+    result = []
+    if attributes
+      for name of attributes
+        result.push ' ' + name + '="' +
+          escapeHTML(attributes[name]) + '"'
+    result.join ''
+
+  render = (element) ->
+    # Text node
+    if typeof element is 'string'
+      pieces.push escapeHTML element
+    # Empty tag
+    else if not element.content or
+                element.content.length is 0
+      pieces.push '<' + element.name +
+        renderAttributes(element.attributes) + '/>'
+    # Tag with content
+    else
+      pieces.push '<' + element.name +
+        renderAttributes(element.attributes) + '>'
+      forEach element.content, render
+      pieces.push '</' + element.name + '>'
+
+  render element
+  pieces.join ''
