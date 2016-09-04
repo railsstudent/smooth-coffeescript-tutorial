@@ -504,3 +504,47 @@ body = [tag('h1', ['The Test']),
         image(linkOstrich)]
 doc = htmlDoc 'The Test', body
 console.log renderHTML doc
+
+footnote = (number) ->
+  tag 'sup',
+    [link '#footnote' + number, String number]
+
+console.log footnote(42), 3
+
+renderFragment = (fragment) ->
+  if fragment.type is 'reference'
+    footnote fragment.number
+  else if fragment.type is 'emphasised'
+    tag 'em', [fragment.content]
+  else if fragment.type is 'normal'
+    fragment.content
+
+renderParagraph = (paragraph) ->
+  tag paragraph.type,
+    map paragraph.content, renderFragment
+
+renderFootnote = (footnote) ->
+  anchor = tag "a", [],
+    name: "footnote" + footnote.number
+  number = "[#{footnote.number}] "
+  tag "p", [tag("small",
+    [anchor, number, footnote.content])]
+
+# <p>
+#    <small>
+#       <a name="footnote3" />[3] content
+#    </small>
+# </p>
+
+renderFile = (file, title) ->
+  paragraphs = map file.split('\n\n'),
+                   processParagraph
+  footnotes = map extractFootnotes(paragraphs),
+                  renderFootnote
+  body = map paragraphs,
+             renderParagraph
+  body = body.concat footnotes
+  renderHTML htmlDoc title, body
+
+page = renderFile recluseFile, 'The Book of Programming'
+console.log page
