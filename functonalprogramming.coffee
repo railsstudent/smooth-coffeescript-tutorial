@@ -419,3 +419,36 @@ tag = (name, content, attributes) ->
   name: name
   attributes: attributes
   content: content
+
+link = (target, text) ->
+  tag "a", [text], href: target
+
+console.log link "http://www.gokgs.com/", "Play Go!"
+
+htmlDoc = (title, bodyContent) ->
+  tag "html", [tag("head", [tag "title", [title]]),
+               tag "body", bodyContent]
+
+console.log htmlDoc "Quote", "In his house at R'lyeh " +
+                      "dead Cthulu waits dreaming."
+
+
+#{ name: 'a',
+#  attributes: { href: 'http://www.gokgs.com/' },
+#  content: [ 'Play Go!' ] }
+
+#{ name: 'html',
+#  attributes: undefined,
+#  content:
+#   [ { name: 'head', attributes: undefined, content: [Object] },
+#     { name: 'body',
+#       attributes: undefined,
+#       content: 'In his house at R\'lyeh dead Cthulu waits dreaming.' }
+#   ]
+#}
+
+# Exercise 24
+image = (location) ->
+  tag "img", [], src : location
+
+console.log image 'http://wwww.abc.com/xyz.png'
