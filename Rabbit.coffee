@@ -9,3 +9,7 @@ fatRabbit = new Rabbit "fat"
 
 whiteRabbit.speak "Hurry!"
 fatRabbit.speak "Tasty!"
+
+killerRabbit = new Rabbit 'killer'
+killerRabbit.speak 'GRAAAAAAAAAH!'
+console.log killerRabbit
