@@ -1,7 +1,10 @@
 class Rabbit
   constructor: (@adjective) ->
-  speak: (line) ->
-    console.log "The #{@adjective} rabbit says '#{line}'"
+#  speak: (line) ->
+#    console.log "The #{@adjective} rabbit says '#{line}'"
+
+Rabbit::speak = (line) ->
+  console.log "The #{@adjective} rabbit says '#{line}'"
 
 class WeightyRabbit extends Rabbit
   constructor: (adjective, @weight) ->
@@ -38,3 +41,18 @@ moonGravity = 1/6
 jumboRabbit.speak "Carry me, I weigh
 #{jumboRabbit.adjustedWeight(moonGravity)}"
 tinyRabbit.speak "He ain't heavy, he is my brother"
+
+console.log Rabbit.prototype.toString
+
+Rabbit::teeth = 'small'
+console.log killerRabbit.teeth
+killerRabbit.teeth = 'long, sharp, and bloody'
+console.log killerRabbit.teeth
+console.log Rabbit::teeth + ',' + Rabbit.prototype.teeth
+
+Rabbit::dance = ->
+  console.log "The #{@adjective} rabbit dances a jig."
+killerRabbit.dance()
+
+hazelRabbit = new Rabbit "hazel"
+hazelRabbit.speak "Good Frith!"
