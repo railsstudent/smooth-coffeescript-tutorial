@@ -13,3 +13,15 @@ fatRabbit.speak "Tasty!"
 killerRabbit = new Rabbit 'killer'
 killerRabbit.speak 'GRAAAAAAAAAH!'
 console.log killerRabbit
+
+
+makeRabbit = (adjective) ->
+  adjective : adjective
+  speak: (line) -> console.log adjective + ': ' + line
+
+blackRabbit = makeRabbit 'black'
+blackRabbit.speak 'I need to take a bath!!!!'
+console.log blackRabbit
+
+console.log killerRabbit.constructor.name
+console.log blackRabbit.constructor.name
