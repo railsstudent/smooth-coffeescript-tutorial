@@ -97,3 +97,10 @@ _any = (array, test) ->
 
 console.log _any [3, 4, 0, -3, 2, 1], (n) -> n < 0
 console.log _any [3, 4, 0, 2, 1], (n) -> n < 0
+
+_member = (array, value) ->
+  partial = (func, a...) -> (b...) -> func a..., b...
+  _any array, partial ((a,b) -> a is b), value
+
+console.log _member ["Fear", "Loathing"], "Denial"
+console.log _member ["Fear", "Loathing"], "Loathing"
