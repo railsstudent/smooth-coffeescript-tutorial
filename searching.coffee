@@ -15,10 +15,9 @@ console.log roads
 
 
 # Exercise 26
-makeRoads = (from) ->
-  for i in [0...arguments.length] by 2
-    #makeRoad from, to, length
-    makeRoad from, arguments[i], arguments[i+1]
+makeRoads = (from, to_length_pairs...) ->
+  for i in [0...to_length_pairs.length] by 2
+    makeRoad from, to_length_pairs[i], to_length_pairs[i+1]
 
 makeRoads 'Point Kiukiu',
   'Hanaiapa', 19, 'Mt Feani', 15, 'Taaoa', 15
@@ -68,3 +67,24 @@ gamblerPath = (from, to) ->
   path
 
 console.log gamblerPath 'Hanaiapa', 'Mt Feani'
+
+_break = toString -> "Break"
+_forEach = (array, action) ->
+  try
+    for element in array
+      action element
+  catch exception
+    if exception isnt _break
+      throw exception
+
+console.log _forEach [1..3], (element) -> element * element
+
+_member = (array, value) ->
+  found = false
+  _forEach array, (element) ->
+    if element is value
+      found = true
+      throw _break
+  found
+
+ console.log _member [6, 7, 'Bordeaux'], 7
