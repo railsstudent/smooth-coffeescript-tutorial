@@ -88,3 +88,12 @@ _member = (array, value) ->
   found
 
  console.log _member [6, 7, 'Bordeaux'], 7
+
+_any = (array, test) ->
+  for element in array
+    if test element
+      return true
+  false
+
+console.log _any [3, 4, 0, -3, 2, 1], (n) -> n < 0
+console.log _any [3, 4, 0, 2, 1], (n) -> n < 0
