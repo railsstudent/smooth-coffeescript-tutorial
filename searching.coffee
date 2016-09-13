@@ -104,3 +104,71 @@ _member = (array, value) ->
 
 console.log _member ["Fear", "Loathing"], "Denial"
 console.log _member ["Fear", "Loathing"], "Loathing"
+
+_every = (array, test) ->
+  for element in array
+    if not test element
+      return false
+  true
+
+console.log _every [1,2,0,-1], (n) -> n isnt 0
+console.log _every [1,2,-1], (n) -> n isnt 0
+console.log _every [1,2,-1], (n) -> n isnt 0
+
+typeIsArray = Array.isArray || ( value ) ->
+  return {}.toString.call( value ) is '[object Array]'
+
+#This function takes an array of arrays, and puts the elements
+#of the arrays together in one big array.
+_flatten = (array) ->
+  result = []
+  for element in array
+    if typeIsArray element
+      result = result.concat _flatten element
+    else
+      result.push element
+  result
+
+console.log _flatten [[1],[2, [3,4]], [5,6]]
+console.log _flatten [[1],[2, [3,4]], 0, [[5,6],[8,9,10]]]
+
+_filter = (array, test) ->
+  result = []
+  for element in array
+    if test element then result.push element
+  result
+
+console.log _filter [1,-3, -1, 0,9], (n) -> n >= 0
+
+console.log _filter [0, 4, 8, 12], (n) -> n < 5
+
+isOdd = (n) -> n % 2 isnt 0
+console.log _filter [0..6], isOdd # Using Underscore
+
+
+_map = (array, action) ->
+  result = []
+  for element in array
+      result.push action element
+  result
+
+console.log _map [1,3,4], (n) -> n * n
+
+possibleRoutes = (from, to) ->
+  findRoutes = (route) ->
+    notVisited = (road) ->
+      not (road.to in route.places)
+    continueRoute = (road) ->
+      findRoutes
+        places: route.places.concat([road.to]),
+        length: route.length + road.distance
+    end = route.places[route.places.length - 1]
+    if end is to
+      [route]
+    else
+      _flatten _map _filter(roadsFrom(end), notVisited),
+                  continueRoute
+  findRoutes {places: [from], length: 0}
+
+console.log (possibleRoutes 'Point Teohotepapapa', 'Point Kiukiu').length
+console.log possibleRoutes 'Hanapaoa', 'Mt Ootua'
